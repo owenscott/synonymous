@@ -1,0 +1,58 @@
+body {
+	background-color: #000050;
+	padding: 10px;
+	margin: 0;
+	font-family: Helvetica;
+	font-size: 16px;
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: Cambria;
+}
+
+h1 {
+	font-size: 3em;
+}
+
+textarea {
+	display: block;
+	margin: 1em 0 2em 0;
+	min-width: 800px;
+	min-height: 200px;
+	font-size: 1em;
+}
+
+.by-line {
+	font-size: .5em;
+	font-style: italic;
+}
+
+.container {
+	max-width: 1000px;
+	background-color: white;
+	border-radius: 10px;
+	margin: 0px auto;
+	min-height: 100%;
+	padding: 10px 30px;
+}
+
+button {
+	background-color: #004400;
+	color: white;
+	font: inherit;
+	min-width: 100px;
+	min-height: 50px;
+	border-style: none;
+	border-radius: 5px;
+	padding: 10px;
+	cursor: pointer;
+}
+
+#results {
+	display: none;
+}
+
+.suggestion {
+	background-color: yellow;
+	padding: .1em .2em;
+}
