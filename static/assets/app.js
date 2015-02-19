@@ -19,18 +19,20 @@ var getSuggestions = function(options) {
 					resultsString = resultsString.replace(matchWord, function(word) {
 						var wordWithSuggestions = '<strong>' + word + '</strong>' + ' (<span class="suggestion">';
 						suggestions[word].forEach(function(suggestion) {
-							wordWithSuggestions = wordWithSuggestions + suggestion + '</span>';
-							if ((i + 1) < _.keys(suggestions).length) {
-								wordWithSuggestions += ', '
-							}
+							wordWithSuggestions = wordWithSuggestions + suggestion + '</span>, ';
 						})
-						wordWithSuggestions += ')'
+						wordWithSuggestions = wordWithSuggestions.slice(0, wordWithSuggestions.length - 2) + ')'
 						return wordWithSuggestions;
 					})
 					return resultsString;
 				})
 
-				$('#results').html('<h2>Suggestions</h2>\n<pre>'+ resultsString + '</pre>')
+				$('#results').html('<h2>Suggestions</h2>\n')
+				var resultsArr = resultsString.split(/\n/);
+				resultsArr.forEach(function(p) {
+					$('#results').append('<p>' + p + '</p>')
+				})
+				
 				$('#submission-form').toggle({duration:2000});
 				$('#results').toggle({duration:2000});
 			}

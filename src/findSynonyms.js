@@ -51,7 +51,7 @@ var getSynonyms = function(textArr, callback) {
 
 			textArr,
 
-			2,
+			10,
 
 			function(word, callback) {
 
