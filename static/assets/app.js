@@ -1,7 +1,7 @@
 
 
 var getSuggestions = function(options) {
-	$.ajax('http://localhost:9000/syns', {
+	$.ajax('syns', {
 		type: 'POST',
 		data: {
 			resumeText: options.resumeText,
@@ -30,8 +30,7 @@ var getSuggestions = function(options) {
 					return resultsString;
 				})
 
-				$('#results').html('<h2>Suggestions</h2>\n<p>'+ resultsString + '</p>')
-
+				$('#results').html('<h2>Suggestions</h2>\n<pre>'+ resultsString + '</pre>')
 				$('#submission-form').toggle({duration:2000});
 				$('#results').toggle({duration:2000});
 			}
