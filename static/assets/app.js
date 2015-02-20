@@ -9,8 +9,10 @@ var getSuggestions = function(options) {
 		},
 		success: function(suggestions) {
 			console.log(suggestions);
+			$('#results .results').html('');
 			if (_.isEmpty(suggestions)) {
 				alert('No potential synonyms found. Please try to paste more text for comparison.');
+				$('#loading').toggle();
 				$('#submission-form').toggle();
 			}
 			else {
@@ -18,7 +20,7 @@ var getSuggestions = function(options) {
 				var resultsString = options.resumeText;
 				_.keys(suggestions).forEach(function(matchWord, i) {
 					console.log(new RegExp('\\s' + matchWord + '\\s', 'g'))
-					resultsString = resultsString.replace(new RegExp('\\s' + matchWord + '\\s', 'g'), function(word) {
+					resultsString = resultsString.replace(new RegExp('(\\s)' + matchWord + '(\\s)', 'g'), function(word) {
 						word = word.trim();
 						console.log(word);
 						var wordWithSuggestions = '<strong> ' + word + '</strong>' + ' (<span class="suggestion">';
@@ -31,10 +33,9 @@ var getSuggestions = function(options) {
 					return resultsString;
 				})
 
-				$('#results').html('<h2>Suggestions</h2>\n')
 				var resultsArr = resultsString.split(/\n/);
 				resultsArr.forEach(function(p) {
-					$('#results').append('<p>' + p + '</p>')
+					$('#results .results').append('<p>' + p + '</p>')
 				})
 				
 				$('#loading').toggle({duration:2000});
@@ -75,5 +76,10 @@ $(document).ready(function() {
 		}
 
 
+	})
+
+	$('#go-back').on('click', function(e) {
+		$('#results').toggle();
+		$('#submission-form').toggle();
 	})
 })
