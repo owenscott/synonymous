@@ -52,6 +52,11 @@ button {
 	display: none;
 }
 
+#results p {
+	line-height: 1.35em;
+	margin: 1.5em 0;
+}
+
 .suggestion {
 	background-color: yellow;
 	padding: .1em .2em;

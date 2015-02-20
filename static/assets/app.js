@@ -17,12 +17,15 @@ var getSuggestions = function(options) {
 
 				var resultsString = options.resumeText;
 				_.keys(suggestions).forEach(function(matchWord, i) {
-					resultsString = resultsString.replace(matchWord, function(word) {
-						var wordWithSuggestions = '<strong>' + word + '</strong>' + ' (<span class="suggestion">';
+					console.log(new RegExp('\\s' + matchWord + '\\s', 'g'))
+					resultsString = resultsString.replace(new RegExp('\\s' + matchWord + '\\s', 'g'), function(word) {
+						word = word.trim();
+						console.log(word);
+						var wordWithSuggestions = '<strong> ' + word + '</strong>' + ' (<span class="suggestion">';
 						suggestions[word].forEach(function(suggestion) {
 							wordWithSuggestions = wordWithSuggestions + suggestion + '</span>, ';
 						})
-						wordWithSuggestions = wordWithSuggestions.slice(0, wordWithSuggestions.length - 2) + ')'
+						wordWithSuggestions = wordWithSuggestions.slice(0, wordWithSuggestions.length - 2) + ') '
 						return wordWithSuggestions;
 					})
 					return resultsString;
