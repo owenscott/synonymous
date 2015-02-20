@@ -48,7 +48,7 @@ button {
 	cursor: pointer;
 }
 
-#results {
+#results, #loading {
 	display: none;
 }
 

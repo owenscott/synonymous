@@ -10,7 +10,8 @@ var getSuggestions = function(options) {
 		success: function(suggestions) {
 			console.log(suggestions);
 			if (_.isEmpty(suggestions)) {
-				alert('No results found');
+				alert('No potential synonyms found. Please try to paste more text for comparison.');
+				$('#submission-form').toggle();
 			}
 			else {
 
@@ -33,12 +34,22 @@ var getSuggestions = function(options) {
 					$('#results').append('<p>' + p + '</p>')
 				})
 				
-				$('#submission-form').toggle({duration:2000});
+				$('#loading').toggle({duration:2000});
 				$('#results').toggle({duration:2000});
 			}
 		},
 		error: function(err) {
-			console.log(err)
+			$('#loading').toggle();
+			$('#results').html(JSON.stringify(err));
+			$('#results').toggle();
+		},
+		timeout: function() {
+			$('#results').toggle();
+			$('#results').html('<p>Error loading your results. Please contact the Resutron team</p>')
+		},
+		beforeSend: function() {
+			$('#submission-form').toggle();
+			$('#loading').toggle();
 		}
 	})
 }
