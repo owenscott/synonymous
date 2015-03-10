@@ -2,10 +2,13 @@
 var _ = require('underscore'),
 		MongoClient = require('mongodb').MongoClient,
 		request = require('request'),
-		async = require('async');
+		async = require('async'),
+		fs = require('fs'),
+		analytics = require('./analytics.js');
 
+var CONF = JSON.parse(fs.readFileSync('./conf.json').toString());
 
-
+console.log(CONF);
 
 
 // from ranks.nl
@@ -42,11 +45,12 @@ var getSynonyms = function(textArr, callback) {
 
 	var syns = {};
 
-	MongoClient.connect('mongodb://localhost:27017/wordCache', function(err, db) {
+	MongoClient.connect('mongodb://' + CONF.mongoUrl + ':' + CONF.mongoPort + '/' + CONF.dbName, function(err, db) {
 		
 		if (err) {
 			console.log('Mongo Error', err);
 		}
+
 		async.eachLimit(
 
 			textArr,
@@ -55,7 +59,7 @@ var getSynonyms = function(textArr, callback) {
 
 			function(word, callback) {
 
-				db.collection('words').find({word: word}).toArray(function(err, arr) {
+				db.collection(CONF.wordCollection).find({word: word}).toArray(function(err, arr) {
 
 					var addSyns = function(word) {
 						word.syns.forEach(function(syn) {
@@ -66,7 +70,7 @@ var getSynonyms = function(textArr, callback) {
 					if (_.isEmpty(arr)) {
 						console.log('No match found for', word);
 						// get the word from the API
-						request('http://words.bighugelabs.com/api/2/39ca5993b822844369d857ef369b74dd/' + word + '/', function(err, resp, body){
+						request('http://words.bighugelabs.com/api/2/' + CONF.synonymApiKey + '/' + word + '/', function(err, resp, body){
 							var synonymArr = body.split('\n');
 							synonymArr = _.chain(synonymArr).map(function(syn) {
 								var parts = syn.split('|');
@@ -129,7 +133,20 @@ module.exports = function(args, callback) {
 		})
 
 		var wrapper = function() {
+
+			process.nextTick(function() {
+				
+				analytics.transaction({
+					resumeText: args.resumeText,
+					refText: args.refText,
+					suggestions: suggestions,
+					transactionId: args.transactionId
+				})
+			
+			})
+
 			callback(err, suggestions);
+		
 		}
 		process.nextTick(wrapper);
 	})
