@@ -25,6 +25,25 @@ exports.synFeedback = function(payload) {
 
 }
 
+exports.appFeedback = function(payload) {
+
+	MongoClient.connect('mongodb://' + CONF.mongoUrl + ':' + CONF.mongoPort + '/' + CONF.dbName, function(err, db) {
+		
+		if (err) {
+			console.log('Mongo Error', err);
+		}
+
+		payload.eventType = 'feedback'
+
+		db.collection(CONF.feedbackCollection).insert(payload, function(err, success) {
+			console.log('User feedback :).', payload);
+			db.close();
+		})
+
+	})
+
+}
+
 exports.transaction = function(transactionSummary) {
 
 	MongoClient.connect('mongodb://' + CONF.mongoUrl + ':' + CONF.mongoPort + '/' + CONF.dbName, function(err, db) {

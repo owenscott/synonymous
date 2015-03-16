@@ -150,9 +150,43 @@ $(document).ready(function() {
 
 	})
 
-
 	$('#go-back').on('click', function(e) {
 		$('#results').toggle();
 		$('#submission-form').toggle();
+		$('#feedback').show();
+		$('#overall').val('');
+		$('#feedback-submitted').hide();
 	})
+
+	$('#feedback-button').on('click', function(e) {
+		e.preventDefault();
+		
+		var data = $('#feedback').serializeArray();
+
+		data.push({
+			name:	'overall',
+			value: $('#overall').val()
+		});
+
+		$.ajax('feedback', {
+			
+			type: 'POST',
+
+			data: data,
+
+			success: function() {
+				$('#feedback').hide();
+				$('#feedback-submitted').show();
+			},
+
+			error: function(err) {
+				$('body').append('<div class="warn"><p>If you see this can you shoot Owen an email? Thanks!</p><p>' + JSON.stringify(err) + '</p></div>')
+			}
+
+
+		})
+
+
+	})
+
 })

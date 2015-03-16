@@ -9,9 +9,9 @@
 			<h1>Synonymous <span class="by-line">by R&eacute;sutr&oslash;n</span></h1>
 			<section id="submission-form">
 				<form>
-					<label for="resumeText">Paste some text from your resume here.</label>
+					<label for="resumeText">Paste text from your resume here.</br></br> Focus on bullet points and other sections which describe the work that you've done.</label>
 					<textarea required name="resumeText" id="resumeText" placeholder="Resume text..."></textarea>
-					<label for="refText">Paste the job description here.</label>
+					<label for="refText">Paste the entire job description here.</label>
 					<textarea required name="refText" id="refText" placeholder="Job description..."></textarea>
 					<button>Work Some Magic!</button>
 				</form>
@@ -20,9 +20,26 @@
 				<img src="assets/loader.gif">
 			</div>
 			<section id="results">
+				<p>The words highlighted in yellow below are suggestions for changes that you can make. They are based on words in the job description which are synonyms for the words you've used on your resume.</p>
+				<p>If you see a suggestion which you like, please click on the <img src="assets/img/check.png"> button to help us improve our algorithm. If you see a suggestion which you don't like, please click on the <img src="assets/img/x.png"> button.</p>
+				<p>When you're done, please scroll to the bottom of the page and complete the short survey.</p>
 				<h2>Suggestions</h2>
 				<div class="results">
 				</div>
+				<h2>Survey</h2>
+				<form id="feedback">
+					<div class="question">
+						<label>Did you /will you make any changes to your resume based on the suggestions? </label><label>Yes</label><input name="changes" type="radio" value="yes"><label>No</label><input name="changes" type="radio" value="no"></br>
+					</div>
+					<div class="question">
+						<label>Would you be interested in using a tool like this, assuming the algorithm worked better? </label><label>Yes</label><input name="interest" type="radio" value="yes"><label>No</label><input name="interest" type="radio" value="no"></br>
+					</div>
+					<div class="question">
+						<label>What is your overall impression of the tool? </label><textarea id="overall" rows="2" columns="50"></textarea>
+					</div>
+					<button id="feedback-button">Submit Feedback</button>
+				</form>
+				<div id="feedback-submitted"><p>Thank you!</p></div>
 				<button id="go-back">Go Back</button>
 			</section>
 		</div>

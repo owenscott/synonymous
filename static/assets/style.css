@@ -48,6 +48,12 @@ button {
 	cursor: pointer;
 }
 
+#feedback-button {
+	background-color: navy;
+	min-height: 20px;
+	display: block;
+}
+
 #results, #loading {
 	display: none;
 }
@@ -69,6 +75,15 @@ button {
 p img {
 	height: 1em;
 	cursor: pointer;
+}
+
+#feedback-submitted {
+	display: none;
+}
+
+.question {
+	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 .warn {

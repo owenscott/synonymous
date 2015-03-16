@@ -84,6 +84,22 @@ server.route({
 	}
 })
 
+server.route({
+	method: 'POST',
+	path: '/feedback',
+	handler: function(request, reply) {
+
+		console.log(request.payload);
+		
+		process.nextTick(function() {
+			analytics.appFeedback(request.payload);
+		})
+
+		reply('Woot');
+
+	}
+})
+
 server.start(function() {
 	console.log('server listening on', server.info.uri)
 });
